@@ -1,0 +1,91 @@
+
+-- BLUE NEON HUB
+-- Single File UI Template
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local Features = {
+    ["Auto Farm"] = false,
+    ["Auto Kill"] = false,
+    ["Auto Item"] = false,
+    ["Auto V4"] = false,
+    ["Auto Boss"] = false
+}
+
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "BlueNeonHub"
+Gui.ResetOnSpawn = false
+Gui.Parent = Player:WaitForChild("PlayerGui")
+
+local Main = Instance.new("Frame")
+Main.Size = UDim2.fromOffset(320, 390)
+Main.Position = UDim2.new(.5, -160, .5, -195)
+Main.BackgroundColor3 = Color3.fromRGB(5, 15, 35)
+Main.Parent = Gui
+
+Instance.new("UICorner", Main).CornerRadius =
+    UDim.new(0, 14)
+
+local Border = Instance.new("UIStroke", Main)
+Border.Color = Color3.fromRGB(0, 190, 255)
+Border.Thickness = 2
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 55)
+Title.BackgroundColor3 = Color3.fromRGB(0, 35, 75)
+Title.Text = "⚡ BLUE NEON HUB"
+Title.TextColor3 = Color3.fromRGB(0, 210, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 21
+Title.Parent = Main
+
+local function CreateToggle(name, position)
+    local Button = Instance.new("TextButton")
+    Button.Size = UDim2.new(1, -30, 0, 43)
+    Button.Position = UDim2.fromOffset(15, position)
+    Button.BackgroundColor3 = Color3.fromRGB(0, 55, 95)
+    Button.TextColor3 = Color3.new(1, 1, 1)
+    Button.Font = Enum.Font.GothamBold
+    Button.TextSize = 15
+    Button.Text = name .. " : OFF"
+    Button.Parent = Main
+
+    Instance.new("UICorner", Button).CornerRadius =
+        UDim.new(0, 8)
+
+    Button.MouseButton1Click:Connect(function()
+        Features[name] = not Features[name]
+
+        Button.Text = name ..
+            (Features[name] and " : ON" or " : OFF")
+
+        Button.BackgroundColor3 = Features[name]
+            and Color3.fromRGB(0, 145, 220)
+            or Color3.fromRGB(0, 55, 95)
+    end)
+end
+
+CreateToggle("Auto Farm", 70)
+CreateToggle("Auto Kill", 120)
+CreateToggle("Auto Item", 170)
+CreateToggle("Auto V4", 220)
+CreateToggle("Auto Boss", 270)
+
+local Stop = Instance.new("TextButton")
+Stop.Size = UDim2.new(1, -30, 0, 42)
+Stop.Position = UDim2.fromOffset(15, 330)
+Stop.BackgroundColor3 = Color3.fromRGB(180, 25, 50)
+Stop.Text = "STOP ALL"
+Stop.TextColor3 = Color3.new(1, 1, 1)
+Stop.Font = Enum.Font.GothamBold
+Stop.Parent = Main
+
+Stop.MouseButton1Click:Connect(function()
+    for name in pairs(Features) do
+        Features[name] = false
+    end
+    Gui:Destroy()
+end)
+
+print("BLUE NEON HUB LOADED!")
