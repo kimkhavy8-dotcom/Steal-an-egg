@@ -1,91 +1,232 @@
+-- ====================================================
+-- Script Loader Hub - AIZEN Blox Fruit (Blue Theme)
+-- ====================================================
 
--- BLUE NEON HUB
--- Single File UI Template
-
+local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
+local player = Players.LocalPlayer
 
-local Features = {
-    ["Auto Farm"] = false,
-    ["Auto Kill"] = false,
-    ["Auto Item"] = false,
-    ["Auto V4"] = false,
-    ["Auto Boss"] = false
-}
+-- 1. สร้าง UI Login (Password: AIZEN999)
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "AizenBloxFruitLoaderGUI"
+ScreenGui.Parent = CoreGui
+ScreenGui.ResetOnSpawn = false
 
-local Gui = Instance.new("ScreenGui")
-Gui.Name = "BlueNeonHub"
-Gui.ResetOnSpawn = false
-Gui.Parent = Player:WaitForChild("PlayerGui")
+local LoginFrame = Instance.new("Frame")
+LoginFrame.Name = "LoginFrame"
+LoginFrame.Parent = ScreenGui
+LoginFrame.BackgroundColor3 = Color3.fromRGB(15, 20, 30) -- ពណ៌ខៀវងងឹតស៊ីគ្នាជាមួយ Logo
+LoginFrame.BorderSizePixel = 0
+LoginFrame.Position = UDim2.new(0.5, -170, 0.5, -140)
+LoginFrame.Size = UDim2.new(0, 340, 0, 280)
+LoginFrame.Active = true
+LoginFrame.Draggable = true
 
-local Main = Instance.new("Frame")
-Main.Size = UDim2.fromOffset(320, 390)
-Main.Position = UDim2.new(.5, -160, .5, -195)
-Main.BackgroundColor3 = Color3.fromRGB(5, 15, 35)
-Main.Parent = Gui
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = LoginFrame
 
-Instance.new("UICorner", Main).CornerRadius =
-    UDim.new(0, 14)
+-- ស៊ុមពណ៌ខៀវប្រាក់ (Steel Blue Stroke)
+local UIStroke = Instance.new("UIStroke")
+UIStroke.Parent = LoginFrame
+UIStroke.Color = Color3.fromRGB(80, 160, 210)
+UIStroke.Thickness = 2
 
-local Border = Instance.new("UIStroke", Main)
-Border.Color = Color3.fromRGB(0, 190, 255)
-Border.Thickness = 2
-
+-- ដាក់ឈ្មោះ AIZEN Blox Fruit ជាមួយពណ៌ខៀវស្ទីលឡូហ្គោ
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 55)
-Title.BackgroundColor3 = Color3.fromRGB(0, 35, 75)
-Title.Text = "⚡ BLUE NEON HUB"
-Title.TextColor3 = Color3.fromRGB(0, 210, 255)
+Title.Parent = LoginFrame
+Title.BackgroundTransparency = 1
+Title.Position = UDim2.new(0, 0, 0, 15)
+Title.Size = UDim2.new(1, 0, 0, 40)
 Title.Font = Enum.Font.GothamBold
-Title.TextSize = 21
-Title.Parent = Main
+Title.Text = "⚡ AIZEN Blox Fruit ⚡"
+Title.TextColor3 = Color3.fromRGB(100, 200, 255) -- ពណ៌ខៀវស្រស់ស្អាត
+Title.TextSize = 22
 
-local function CreateToggle(name, position)
-    local Button = Instance.new("TextButton")
-    Button.Size = UDim2.new(1, -30, 0, 43)
-    Button.Position = UDim2.fromOffset(15, position)
-    Button.BackgroundColor3 = Color3.fromRGB(0, 55, 95)
-    Button.TextColor3 = Color3.new(1, 1, 1)
-    Button.Font = Enum.Font.GothamBold
-    Button.TextSize = 15
-    Button.Text = name .. " : OFF"
-    Button.Parent = Main
+-- Subtitle ភាសាខ្មែរ
+local SubTitle = Instance.new("TextLabel")
+SubTitle.Parent = LoginFrame
+SubTitle.BackgroundTransparency = 1
+SubTitle.Position = UDim2.new(0, 0, 0, 55)
+SubTitle.Size = UDim2.new(1, 0, 0, 25)
+SubTitle.Font = Enum.Font.Gotham
+SubTitle.Text = "🔐 សូមបញ្ចូលពាក្យសម្ងាត់ (Password)"
+SubTitle.TextColor3 = Color3.fromRGB(200, 200, 200)
+SubTitle.TextSize = 13
 
-    Instance.new("UICorner", Button).CornerRadius =
-        UDim.new(0, 8)
+local TextBox = Instance.new("TextBox")
+TextBox.Parent = LoginFrame
+TextBox.BackgroundColor3 = Color3.fromRGB(25, 35, 50)
+TextBox.BorderSizePixel = 0
+TextBox.Position = UDim2.new(0.1, 0, 0.38, 0)
+TextBox.Size = UDim2.new(0.8, 0, 0, 45)
+TextBox.Font = Enum.Font.Gotham
+TextBox.PlaceholderText = "បញ្ចូល Password..."
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.TextSize = 14
 
-    Button.MouseButton1Click:Connect(function()
-        Features[name] = not Features[name]
+local TextBoxCorner = Instance.new("UICorner")
+TextBoxCorner.CornerRadius = UDim.new(0, 8)
+TextBoxCorner.Parent = TextBox
 
-        Button.Text = name ..
-            (Features[name] and " : ON" or " : OFF")
+local TextBoxStroke = Instance.new("UIStroke")
+TextBoxStroke.Parent = TextBox
+TextBoxStroke.Color = Color3.fromRGB(50, 110, 160)
+TextBoxStroke.Thickness = 1
 
-        Button.BackgroundColor3 = Features[name]
-            and Color3.fromRGB(0, 145, 220)
-            or Color3.fromRGB(0, 55, 95)
-    end)
+local LoginBtn = Instance.new("TextButton")
+LoginBtn.Parent = LoginFrame
+LoginBtn.BackgroundColor3 = Color3.fromRGB(30, 130, 200) -- ពណ៌ខៀវដែក (Steel Blue)
+LoginBtn.BorderSizePixel = 0
+LoginBtn.Position = UDim2.new(0.1, 0, 0.68, 0)
+LoginBtn.Size = UDim2.new(0.8, 0, 0, 48)
+LoginBtn.Font = Enum.Font.GothamBold
+LoginBtn.Text = "ចូលប្រើប្រាស់ (Login)"
+LoginBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoginBtn.TextSize = 15
+
+local LoginBtnCorner = Instance.new("UICorner")
+LoginBtnCorner.CornerRadius = UDim.new(0, 8)
+LoginBtnCorner.Parent = LoginBtn
+
+-- 2. ฟังก์ชันรัน Script หลัก (หลังใส่รหัสถูก)
+local function startMainScript()
+	ScreenGui:Destroy() -- បិទផ្ទាំង Login ចោល
+
+	local _ENV = (getgenv or getrenv or getfenv)()
+	local BETA_VERSION = BETA_VERSION or _ENV.BETA_VERSION
+
+	local Scripts = {
+		{
+			GameId = 994732206,
+			UrlPath = if BETA_VERSION then "BLOX-FRUITS-BETA.lua" else "BloxFruits.luau"
+		},
+		{
+			PlacesIds = {10260193230},
+			UrlPath = "MemeSea.luau"
+		}
+	}
+
+	local fetcher, urls = {}, {}
+
+	do
+		local last_exec = _ENV.rz_execute_debounce
+		
+		if last_exec and (tick() - last_exec) <= 5 then
+			return nil
+		end
+		
+		_ENV.rz_execute_debounce = tick()
+	end
+
+	urls.Owner = "https://raw.githubusercontent.com/tlredz/";
+	urls.Repository = urls.Owner .. "Scripts/refs/heads/main/";
+	urls.Translator = urls.Repository .. "Translator/";
+	urls.Utils = urls.Repository .. "Utils/";
+
+	do
+		local executor = syn or fluxus
+		local queueteleport = queue_on_teleport or (executor and executor.queue_on_teleport)
+		
+		if not _ENV.rz_added_teleport_queue and type(queueteleport) == "function" then
+			local ScriptSettings = {...}
+			local SettingsCode = ""
+			
+			_ENV.rz_added_teleport_queue = true
+			
+			local Success, EncodedSettings = pcall(function()
+				return game:GetService("HttpService"):JSONEncode(ScriptSettings)
+			end)
+			
+			if Success and EncodedSettings then
+				SettingsCode = "unpack(game:GetService('HttpService'):JSONDecode('" .. EncodedSettings .. "'))"
+			end
+			
+			local SourceCode = ("loadstring(game:HttpGet('%smain.luau'))(%s)"):format(urls.Repository, SettingsCode)
+			
+			if BETA_VERSION then
+				SourceCode = "getgenv().BETA_VERSION=true;" .. SourceCode
+			end
+			
+			pcall(queueteleport, SourceCode)
+		end
+	end
+
+	do
+		if _ENV.rz_error_message then
+			_ENV.rz_error_message:Destroy()
+		end
+		
+		local identifyexecutor = identifyexecutor or (function() return "Unknown" end)
+		
+		local function CreateMessageError(Text)
+			_ENV.loadedFarm = nil
+			_ENV.OnFarm = false
+			
+			local Message = Instance.new("Message", workspace)
+			Message.Text = string.gsub(Text, urls.Owner, "")
+			_ENV.rz_error_message = Message
+			
+			error(Text, 2)
+		end
+		
+		local function formatUrl(Url)
+			for key, path in urls do
+				if Url:find("{" .. key .. "}") then
+					return Url:gsub("{" .. key .. "}", path)
+				end
+			end
+			
+			return Url
+		end
+		
+		function fetcher.get(Url)
+			local success, response = pcall(function()
+				return game:HttpGet(formatUrl(Url))
+			end)
+			
+			if success then
+				return response
+			else
+				CreateMessageError(`[1] [{ identifyexecutor() }] failed to get http/url/raw: { Url }\n>>{ response }<<`)
+			end
+		end
+		
+		function fetcher.load(Url: string, concat: string?)
+			local raw = fetcher.get(Url) .. (if concat then concat else "")
+			local runFunction, errorText = loadstring(raw)
+			
+			if type(runFunction) ~= "function" then
+				CreateMessageError(`[2] [{ identifyexecutor() }] sintax error: { Url }\n>>{ errorText }<<`)
+			else
+				return runFunction
+			end
+		end
+	end
+
+	local function IsPlace(Script)
+		if Script.PlacesIds and table.find(Script.PlacesIds, game.PlaceId) then
+			return true
+		elseif Script.GameId and Script.GameId == game.GameId then
+			return true
+		end
+		return false
+	end
+
+	for _, Script in Scripts do
+		if IsPlace(Script) then
+			return fetcher.load("{Repository}Games/" .. Script.UrlPath)(fetcher, ...)
+		end
+	end
 end
 
-CreateToggle("Auto Farm", 70)
-CreateToggle("Auto Kill", 120)
-CreateToggle("Auto Item", 170)
-CreateToggle("Auto V4", 220)
-CreateToggle("Auto Boss", 270)
-
-local Stop = Instance.new("TextButton")
-Stop.Size = UDim2.new(1, -30, 0, 42)
-Stop.Position = UDim2.fromOffset(15, 330)
-Stop.BackgroundColor3 = Color3.fromRGB(180, 25, 50)
-Stop.Text = "STOP ALL"
-Stop.TextColor3 = Color3.new(1, 1, 1)
-Stop.Font = Enum.Font.GothamBold
-Stop.Parent = Main
-
-Stop.MouseButton1Click:Connect(function()
-    for name in pairs(Features) do
-        Features[name] = false
-    end
-    Gui:Destroy()
+-- 3. ตรวจสอบรหัสผ่าน (AIZEN999)
+LoginBtn.MouseButton1Click:Connect(function()
+	if TextBox.Text == "AIZEN999" then
+		startMainScript()
+	else
+		TextBox.Text = ""
+		TextBox.PlaceholderText = "❌ ខុស Password! សូមព្យាយាមម្ដងទៀត"
+	end
 end)
-
-print("BLUE NEON HUB LOADED!")
